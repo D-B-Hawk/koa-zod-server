@@ -1,8 +1,10 @@
 import { app } from "./app";
-import { serverPort } from "./env";
+import { config } from "./config";
 
-const server = app.listen(serverPort, () =>
-  console.log(`server ready for requests at http://localhost:${serverPort}`)
+const server = app.listen(config.serverPort, () =>
+  console.log(
+    `server ready for requests at http://localhost:${config.serverPort}`
+  )
 );
 
 process.on("SIGINT" || "SIGTERM", () => {
