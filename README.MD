@@ -1,5 +1,27 @@
 # KOA-ZOD-SERVER
 
+## Setup
+
+Install dependencies
+
+> npm i
+
+Copy env
+
+> cp .env.example .env
+
+Create development/test databases
+
+> npm run db create
+
+Run existing migrations
+
+> npm run db migrate
+
+Run server
+
+> npm run dev
+
 ## Scripts
 
 create dev/test db
