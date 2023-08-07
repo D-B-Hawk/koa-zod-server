@@ -49,4 +49,5 @@ export const config = {
   serverPort: env.SERVER_PORT,
   dbURL,
   testDbURL,
+  isDevelopment,
 };
