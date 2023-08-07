@@ -3,6 +3,7 @@ import { z } from "zod";
 import { userSchema } from "../../types";
 import { db } from "../../db/db";
 import { getErrorMessage } from "../../utils/errors/getErrorMessage";
+import { errorHandler } from "../../utils/errors/errorHandler";
 
 const validCreateUserBody = userSchema.omit({
   id: true,
@@ -20,18 +21,18 @@ export const createUserRoute = createRouteSpec({
   },
   handler: async (ctx) => {
     try {
-      const newUserId = await db.user.select("id").create(ctx.request.body);
-
+      const newUserId = await db.user
+        .select("id", "username", "createdAt", "updatedAt", "email")
+        .create(ctx.request.body);
       ctx.status = 201;
       ctx.body = {
         data: newUserId,
       };
     } catch (error) {
-      const errorMessage = getErrorMessage(error, "Failed to create new user");
-
-      ctx.status = 400;
+      const { status, errors } = errorHandler(error);
+      ctx.status = status;
       ctx.body = {
-        errors: [errorMessage],
+        errors,
       };
     }
   },

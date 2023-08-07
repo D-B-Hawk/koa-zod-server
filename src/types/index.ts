@@ -4,4 +4,4 @@ import { UserTable } from "../db/tables/user.table";
 
 export const userSchema = tableToZod(UserTable);
 
-type User = z.infer<typeof userSchema>;
+export type User = z.infer<typeof userSchema>;
