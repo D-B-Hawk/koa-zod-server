@@ -1,17 +1,26 @@
-import { ValidationErrorHandler } from "koa-zod-router";
-import { formatZodError } from "./formatZodError";
+import { db } from "../../db/db";
+import { getErrorMessage } from "./getErrorMessage";
 
-export const validationErrorHandler: ValidationErrorHandler = async function (
-  ctx,
-  next
-) {
-  if (ctx.invalid?.error) {
-    ctx.status = 400;
-    ctx.body = {
-      errors: formatZodError(ctx.invalid),
-    };
-  } else {
-    await next();
+export function errorHandler(error: unknown): {
+  status: number;
+  errors: string[];
+} {
+  if (error instanceof db.user.error) {
+    if (error.columns.username) {
+      return {
+        status: 400,
+        errors: ["Username is taken"],
+      };
+    }
+    if (error.columns.email) {
+      return {
+        status: 400,
+        errors: ["Email is taken"],
+      };
+    }
   }
-  return;
-};
+  return {
+    status: 500,
+    errors: [getErrorMessage(error, "Server Error")],
+  };
+}

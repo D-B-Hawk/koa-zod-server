@@ -1,6 +1,6 @@
 import { zodRouter } from "koa-zod-router";
 import { createUserRoute } from "./user/createUser";
-import { validationErrorHandler } from "../utils/errors/errorHandler";
+import { validationErrorHandler } from "../utils/errors/validationErrorHandler";
 
 export const router = zodRouter({
   zodRouter: { exposeRequestErrors: true, validationErrorHandler },
