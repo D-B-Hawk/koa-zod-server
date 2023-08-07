@@ -2,7 +2,6 @@ import { createRouteSpec } from "koa-zod-router";
 import { z } from "zod";
 import { userSchema } from "../../types";
 import { db } from "../../db/db";
-import { getErrorMessage } from "../../utils/errors/getErrorMessage";
 import { errorHandler } from "../../utils/errors/errorHandler";
 
 const validCreateUserBody = userSchema.omit({
